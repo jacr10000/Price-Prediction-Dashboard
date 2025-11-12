@@ -1,4 +1,4 @@
-name: ml-blueprint
+name: price-prediction
 channels:
   - conda-forge
   - defaults

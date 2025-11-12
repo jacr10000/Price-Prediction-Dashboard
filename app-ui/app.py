@@ -32,7 +32,7 @@ data_manager = DataManager(config)
 data_manager.initialize_prod_database()
 
 # Use the default Bootstrap (light) theme
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
 # Create the layout
 app.layout = dbc.Container([
@@ -43,7 +43,7 @@ app.layout = dbc.Container([
         dbc.Col([
             html.H4("Control Panel", style={"color": "#222"}),
             html.Div([
-                html.Label("Plots display time (last N hours)", style={"color": "#222"}),
+                html.Label("Display time in plots (last N hours)", style={"color": "#222"}),
                 dcc.Input(
                     id='lookback-hours',
                     type='number',

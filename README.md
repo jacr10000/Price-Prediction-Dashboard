@@ -4,7 +4,65 @@
 
 ## 🎯 Executive Summary
 
-This **Real-Time Bike Rental Demand Forecasting System** solves a critical business problem for bike-sharing platforms operating across entire cities. The system provides hour-ahead demand predictions that drive dynamic pricing strategies, enabling revenue optimization and improved fleet utilization.
+This **Real-Time Bike Rental Demand Forecasting System** aims to provide hour-ahead demand predictions that drive dynamic pricing strategies, enabling revenue optimization and improved fleet utilization.
+
+
+## 🚀 Quick Start
+
+### Option 1: Running Application in Docker (Recommended)
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd Price-Prediction-Dashboard
+
+# Deploy all services with production configuration (make sure Docker is running)
+docker-compose up --build
+
+# Verify service health
+docker-compose ps
+docker-compose logs -f
+
+# Access the application
+# 🌐 UI Dashboard: http://localhost:8050
+# 🔌 Inference API: http://localhost:5001/health
+```
+
+**Expected Output:**
+```
+✅ app-ml-train         Up
+✅ app-ml-inference-api Up  
+✅ app-ui              Up
+```
+
+### Option 2: Running Application Locally
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd Price-Prediction-Dashboard
+
+# Create and activate conda environment
+conda env create -f environment.yml
+conda activate price-prediction
+
+# Train the model first (if not already trained)
+python app-ml/entrypoint/rain.py
+
+# Run inference in a loop 
+python app-ml/entrypoint/inference.py
+
+# Start the inference API to link to the application UI
+python app-ml/entrypoint/inference_api.py
+
+# Start the UI dashboard in another terminal
+cd app-ui
+python app.py
+```
+
+**Access the application:**
+- 🌐 **UI Dashboard**: http://localhost:8050
+- 🔌 **Inference API**: http://localhost:5001
 
 
 ## Business Problem Solved
@@ -57,75 +115,17 @@ The system implements a comprehensive machine learning pipeline with five distin
 - **Data Structure**: Standardized output format for downstream processing
 
 ### 🐳 Entrypoints
-- **`app-ml/train.py`**: Model training entrypoint boith locally and in production
+- **`app-ml/train.py`**: Model training entrypoint both locally and in production
 - **`app-ml/inference.py`** Entrypoint to run inference pipeline locally
 - **`app-ml/inference-api.py`**: API for inference in production / on web-app
-- **`app-ui/app.py`**: Interactive dashboard for demand reocasting monitoring
+- **`app-ui/app.py`**: Interactive dashboard for demand forecasting monitoring
 
 ---
-
-## 🚀 Quick Start
-
-### Option 1: Running Application in Docker (Recommended)
-
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd ml-project-blueprint
-
-# Deploy all services with production configuration
-docker-compose up --build
-
-# Verify service health
-docker-compose ps
-docker-compose logs -f
-
-# Access the application
-# 🌐 UI Dashboard: http://localhost:8050
-# 🔌 Inference API: http://localhost:5001/health
-```
-
-**Expected Output:**
-```
-✅ app-ml-train         Up
-✅ app-ml-inference-api Up  
-✅ app-ui              Up
-```
-
-### Option 2: Running Application Locally
-
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd ml-project-blueprint
-
-# Create and activate conda environment
-conda env create -f environment.yml
-conda activate ml-blueprint
-
-# Train the model first (if not already trained)
-python app-ml/entrypoint/rain.py
-
-# Run inference in a loop 
-python app-ml/entrypoint/inference.py
-
-# Start the inference API tomlink to the application UI
-python app-ml/entrypoint/inference_api.py
-
-# Start the UI dashboard in another terminal
-cd app-ui
-python app.py
-```
-
-**Access the application:**
-- 🌐 **UI Dashboard**: http://localhost:8050
-- 🔌 **Inference API**: http://localhost:5001
-
 
 ## 📁 Project Architecture & Data Flow
 
 ```
-ml-project-blueprint/
+Price-Prediction-Dashboard/
 ├── 📁 app-ml/                           # Demand Forecasting Engine
 │   ├── 📁 entrypoint/                  # Production ML Services
 │   │   ├── prod_train.py               # Demand model training pipeline
@@ -166,11 +166,13 @@ ml-project-blueprint/
 ├── 📁 models/                          # Demand Forecasting Models
 │   ├── 📁 experiments/                # Model experimentation & A/B testing
 │   └── 📁 prod/                       # Production demand forecasting models
-├── 📁 images/                          # Documentation & Visualizations
 ├── docker-compose.yml                 # Multi-service orchestration
 ├── environment.yml                    # Conda environment specification
 └── README.md                          # Project documentation
 ```
+
+## Acknowledgement
+I would like to thank **Timur Bikmukhametov, PhD** for crafting the course that allowed me to build and understand this infrastructure. His expertize and guidance was crucial for progressively understanding how end-to-end systems are built, and thus further solidify my experience in Data Science.
 
 ## License
 
